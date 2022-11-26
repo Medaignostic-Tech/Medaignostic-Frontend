@@ -8,6 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
+import logo from '../assets/Medaignostic-logos.jpeg';
 
 function Login() {
     return (
@@ -17,6 +18,7 @@ function Login() {
                 <Row className='justify-content-md-center login-form'>
                     <Col md={{span:3}}>
                         <Card className='main-login mb-2' bg='light' text='dark' border='dark'>
+                            <Card.Img variant="top" src={ logo } height="300em" />
                             <Card.Header>
                                 <Nav variant="tabs" defaultActiveKey="/login">
                                     <Nav.Item>

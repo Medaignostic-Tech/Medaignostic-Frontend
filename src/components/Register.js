@@ -9,8 +9,49 @@ import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
 import logo from '../assets/Medaignostic-logos.jpeg';
+import React, {useState} from 'react';
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import { useNavigate } from 'react-router-dom';
+
 
 function Register() {
+    const loginNavigate = useNavigate();
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [age, setAge] = useState(0);
+    const [gender, setGender] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirm_password, setConfirmPassword] = useState('');
+    const [alert, setAlert] = useState('');
+
+    const registerHandler = () => {
+        if (password != confirm_password) {
+            setAlert("Passwords did not match");
+        }
+        else {
+            const salt = bcrypt.genSaltSync(10);
+            const hashedPassword = bcrypt.hashSync(password, salt);
+            axios.post(`http://localhost:8000/register`, {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'age': age,
+            'gender': gender,
+            'password': hashedPassword,
+            'salt': salt
+            })
+            .then(res => {
+                if (res.success) {
+                    loginNavigate("/login", {replace:true, state:{"success":true, "alert":"Registration Successful"}});
+                }
+                setAlert(res.data);
+            });
+        }
+    }
+
     return (
         <div>
             <MainNavbar />
@@ -33,37 +74,38 @@ function Register() {
                                 <Form>
                                     <Form.Group className="mb-3" controlId="name">
                                         <Form.Label>Name</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter name" required/>
+                                        <Form.Control type="text" placeholder="Enter name" required onChange={event => setName(event.target.value)}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="email">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" required/>
+                                        <Form.Control type="email" placeholder="Enter email" required onChange={event => setEmail(event.target.value)}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="phone">
                                         <Form.Label>Phone Number</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter phone number"/>
+                                        <Form.Control type="text" placeholder="Enter phone number" onChange={event => setPhone(event.target.value)}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="age">
                                         <Form.Label>Age</Form.Label>
-                                        <Form.Control type="number" placeholder="Enter age" required/>
+                                        <Form.Control type="number" placeholder="Enter age" required onChange={event => setAge(event.target.value)}/>
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="gender">
-                                        <Form.Check inline name='gender' type="radio" placeholder="Male" label='Male'/>
-                                        <Form.Check inline name='gender' type="radio" placeholder="Female" label='Female'/>
+                                    <Form.Group className="mb-3">
+                                        <Form.Check inline name='gender' type="radio" placeholder="Male" label='Male' onClick={() => setGender('male')}/>
+                                        <Form.Check inline name='gender' type="radio" placeholder="Female" label='Female' onClick={() => setGender('female')}/>
                                     </Form.Group>
                                     <Form.Group className="mb-4" controlId="password">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type="password" placeholder="Password" required/>
+                                        <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
                                     </Form.Group>
                                     <Form.Group className="mb-4" controlId="confirm_password">
                                         <Form.Label>Confirm Password</Form.Label>
-                                        <Form.Control type="password" placeholder="Confirm Password" required/>
+                                        <Form.Control type="password" placeholder="Confirm Password" required onChange={event => setConfirmPassword(event.target.value)}/>
                                     </Form.Group>
-                                    <Button variant="dark" type="submit">
+                                    <Button variant="dark" type="button" onClick={registerHandler}>
                                         Submit
                                     </Button>
                                 </Form>
                             </Card.Body>
+                            <Card.Footer className="text-danger">{ alert }</Card.Footer>
                         </Card>
                     </Col>
                 </Row>

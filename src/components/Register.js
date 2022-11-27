@@ -28,13 +28,13 @@ function Register() {
     const [alert, setAlert] = useState('');
 
     const registerHandler = () => {
-        if (password != confirm_password) {
+        if (password !== confirm_password) {
             setAlert("Passwords did not match");
         }
         else {
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(password, salt);
-            axios.post(`http://localhost:8000/register`, {
+            axios.post(`http://localhost/register`, {
             'name': name,
             'email': email,
             'phone': phone,

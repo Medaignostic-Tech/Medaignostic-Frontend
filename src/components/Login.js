@@ -11,11 +11,36 @@ import '../styles/Login.css'
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
     const [alert, setAlert] = useState('');
     const [alert_status, setAlertStatus] = useState('text-danger');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const registerResult = useLocation();
+
+    const registerHandler = () => {
+        axios.post(`http://localhost/login`, {
+            'email': email,
+            'password': password
+        })
+        .then(res => {
+            if (res.data.login_status === "success") {
+                setAlert("Login Success");
+                setAlertStatus("success");
+            }
+            else if (res.data.login_status === "user_invalid") {
+                setAlert("Invalid User");
+                setAlertStatus("failure");
+            }
+            else if (res.data.login_status === "password_invalid") {
+                setAlert("Wrong Password");
+                setAlertStatus("failure");
+            }
+        });
+    };
 
     useEffect(() => {
         if (registerResult.state !== null) {
@@ -51,14 +76,14 @@ function Login() {
                                 <Form>
                                     <Form.Group className="mb-3" controlId="email">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" required/>
+                                        <Form.Control type="email" placeholder="Enter email" required onChange={event => setEmail(event.target.value)}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-4" controlId="password">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type="password" placeholder="Password" required/>
+                                        <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
                                     </Form.Group>
-                                    <Button variant="dark" type="submit">
+                                    <Button variant="dark" type="button" onClick={registerHandler}>
                                         Submit
                                     </Button>
                                 </Form>

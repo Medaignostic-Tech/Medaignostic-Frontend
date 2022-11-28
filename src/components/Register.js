@@ -11,7 +11,6 @@ import '../styles/Login.css'
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState} from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -32,16 +31,13 @@ function Register() {
             setAlert("Passwords did not match");
         }
         else {
-            const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(password, salt);
             axios.post(`http://localhost/register`, {
             'name': name,
             'email': email,
             'phone': phone,
             'age': age,
             'gender': gender,
-            'password': hashedPassword,
-            'salt': salt
+            'password': password,
             })
             .then(res => {
                 if (res.data.registration_status === "success") {

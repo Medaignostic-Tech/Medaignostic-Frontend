@@ -29,15 +29,15 @@ function Login() {
         .then(res => {
             if (res.data.login_status === "success") {
                 setAlert("Login Success");
-                setAlertStatus("success");
+                setAlertStatus("text-success");
             }
             else if (res.data.login_status === "user_invalid") {
                 setAlert("Invalid User");
-                setAlertStatus("failure");
+                setAlertStatus("text-danger");
             }
             else if (res.data.login_status === "password_invalid") {
                 setAlert("Wrong Password");
-                setAlertStatus("failure");
+                setAlertStatus("text-danger");
             }
         });
     };

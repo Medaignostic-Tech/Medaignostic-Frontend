@@ -13,7 +13,7 @@ import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 
-function Login() {
+function ForgotPassword() {
     const [alert, setAlert] = useState('');
     const [alert_status, setAlertStatus] = useState('text-danger');
     const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ function Login() {
         await axios.post(`http://localhost/login`, {
             'email': email,
             'password': password
-        }, {withCredentials: true})
+        })
         .then(res => {
             if (res.data.login_status === "success") {
                 setAlert("Login Success");
@@ -63,12 +63,15 @@ function Login() {
                         <Card className='main-login mb-2' bg='light' text='dark' border='dark'>
                             <Card.Img variant="top" src={ logo } height="300em" />
                             <Card.Header>
-                                <Nav variant="tabs" defaultActiveKey="/login">
+                                <Nav variant="tabs" defaultActiveKey="/forgot_password">
                                     <Nav.Item>
                                         <Nav.Link href="/login">Login</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="/register">Register</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link href="/forgot_password">Forgot Password</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </Card.Header>
@@ -80,16 +83,16 @@ function Login() {
                                     </Form.Group>
 
                                     <Form.Group className="mb-4" controlId="password">
-                                        <Form.Label>Password</Form.Label>
+                                        <Form.Label>Secret Code</Form.Label>
                                         <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
                                     </Form.Group>
+                                    <Button variant="dark" type="button" onClick={registerHandler}>
+                                        Generate Code
+                                    </Button>
                                     <Button variant="dark" type="button" onClick={registerHandler}>
                                         Submit
                                     </Button>
                                 </Form>
-                                <Card.Link variant='primary' href='/forgot_password'>
-                                    Forgot your Password ?
-                                </Card.Link>
                             </Card.Body>
                             <Card.Footer className={ alert_status }>{ alert }</Card.Footer>
                         </Card>
@@ -100,4 +103,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default ForgotPassword;

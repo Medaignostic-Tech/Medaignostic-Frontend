@@ -26,12 +26,12 @@ function Register() {
     const [confirm_password, setConfirmPassword] = useState('');
     const [alert, setAlert] = useState('');
 
-    const registerHandler = () => {
+    const registerHandler = async () => {
         if (password !== confirm_password) {
             setAlert("Passwords did not match");
         }
         else {
-            axios.post(`http://localhost/register`, {
+            await axios.post(`http://localhost/register`, {
             'name': name,
             'email': email,
             'phone': phone,

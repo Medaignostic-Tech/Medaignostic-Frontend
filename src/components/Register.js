@@ -44,10 +44,12 @@ function Register() {
             'salt': salt
             })
             .then(res => {
-                if (res.success) {
-                    loginNavigate("/login", {replace:true, state:{"success":true, "alert":"Registration Successful"}});
+                if (res.data.registration_status === "success") {
+                    loginNavigate("/login", {replace:true, state:{"alert_status":"success", "alert":"Registration Successful"}});
                 }
-                setAlert(res.data);
+                if (res.data.registration_status === "user_exists") {
+                    loginNavigate("/login", {replace:true, state:{"alert_status":"failure", "alert":"User Already Exists"}});
+                }
             });
         }
     }

@@ -9,8 +9,26 @@ import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
 import logo from '../assets/Medaignostic-logos.jpeg';
+import React, {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 
 function Login() {
+    const [alert, setAlert] = useState('');
+    const [alert_status, setAlertStatus] = useState('text-danger');
+    const registerResult = useLocation();
+
+    useEffect(() => {
+        if (registerResult.state !== null) {
+            if (registerResult.state.alert_status === "success") {
+                setAlertStatus('text-success');
+            }
+            else if (registerResult.state.alert_status === "failure") {
+                setAlertStatus('text-danger');
+            }
+            setAlert(registerResult.state.alert);
+        }
+    });
+
     return (
         <div>
             <MainNavbar />
@@ -48,6 +66,7 @@ function Login() {
                                     Forgot your Password ?
                                 </Card.Link>
                             </Card.Body>
+                            <Card.Footer className={ alert_status }>{ alert }</Card.Footer>
                         </Card>
                     </Col>
                 </Row>

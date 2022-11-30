@@ -8,10 +8,10 @@ import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
+import auth from '../utils/auth';
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import axios from 'axios';
 
 function Login() {
     const [alert, setAlert] = useState('');
@@ -19,38 +19,24 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const registerResult = useLocation();
+    const loginResult = useLocation();
 
-    const registerHandler = async () => {
-        await axios.post(`http://localhost/login`, {
-            'email': email,
-            'password': password
-        }, {withCredentials: true})
-        .then(res => {
-            if (res.data.login_status === "success") {
-                setAlert("Login Success");
-                setAlertStatus("text-success");
-            }
-            else if (res.data.login_status === "user_invalid") {
-                setAlert("Invalid User");
-                setAlertStatus("text-danger");
-            }
-            else if (res.data.login_status === "password_invalid") {
-                setAlert("Wrong Password");
-                setAlertStatus("text-danger");
-            }
-        });
+    const loginHandler = async () => {
+        const response = auth.login(email, password);
+        const status = await response;
+        setAlert(status[0]);
+        setAlertStatus(status[1]);
     };
 
     useEffect(() => {
-        if (registerResult.state !== null) {
-            if (registerResult.state.alert_status === "success") {
+        if (loginResult.state !== null) {
+            if (loginResult.state.alert_status === "success") {
                 setAlertStatus('text-success');
             }
-            else if (registerResult.state.alert_status === "failure") {
+            else if (loginResult.state.alert_status === "failure") {
                 setAlertStatus('text-danger');
             }
-            setAlert(registerResult.state.alert);
+            setAlert(loginResult.state.alert);
         }
     });
 
@@ -83,7 +69,7 @@ function Login() {
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
                                     </Form.Group>
-                                    <Button variant="dark" type="button" onClick={registerHandler}>
+                                    <Button variant="dark" type="button" onClick={loginHandler}>
                                         Submit
                                     </Button>
                                 </Form>

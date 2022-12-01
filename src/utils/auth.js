@@ -85,6 +85,38 @@ class Auth {
             });
         return response;
     }
+
+    forgotPassword = async(email) => {
+        var response = [];
+        const formData = {
+            "email": email
+        }
+        await axios.post(`http://localhost/auth/forgot-password`, formData)
+            .then(res => {
+                const data = res.data;
+                console.log(data);
+                if (data === null) {
+                    response = ["Secret code sent successfully to your registered mail", "success"];
+                } else {
+                    response = ["API Error", "failure"];
+                }
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    const data = err.response.data;
+                    if (data.detail === "User does not exist") {
+                        response = ["User does not exist", "failure"];
+                    } else {
+                        response = ["Internal Server Error", "failure"];
+                    }
+                } else if (err.response.status === 422) {
+                    response = ["Validation Error", "failure"];
+                } else {
+                    response = ["Internal Server Error", "failure"];
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

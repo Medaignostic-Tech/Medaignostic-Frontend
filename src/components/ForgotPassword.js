@@ -8,51 +8,34 @@ import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
+import auth from '../utils/auth';
 import logo from '../assets/Medaignostic-logos.jpeg';
-import React, {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
-import axios from 'axios';
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
+    const resetPasswordNavigate = useNavigate();
     const [alert, setAlert] = useState('');
     const [alert_status, setAlertStatus] = useState('text-danger');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const registerResult = useLocation();
 
-    const registerHandler = async () => {
-        await axios.post(`http://localhost/login`, {
-            'email': email,
-            'password': password
-        })
-        .then(res => {
-            if (res.data.login_status === "success") {
-                setAlert("Login Success");
-                setAlertStatus("text-success");
-            }
-            else if (res.data.login_status === "user_invalid") {
-                setAlert("Invalid User");
-                setAlertStatus("text-danger");
-            }
-            else if (res.data.login_status === "password_invalid") {
-                setAlert("Wrong Password");
-                setAlertStatus("text-danger");
-            }
-        });
-    };
-
-    useEffect(() => {
-        if (registerResult.state !== null) {
-            if (registerResult.state.alert_status === "success") {
-                setAlertStatus('text-success');
-            }
-            else if (registerResult.state.alert_status === "failure") {
+    const forgotPasswordHandler = async () => {
+        const response = auth.forgotPassword(email);
+        const status = await response;
+        if (status[1] === "success") {
+            resetPasswordNavigate("/reset_password", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+        }
+        else if (status[1] === "failure") {
+            if (status[0] === "User does not exist") {
+                setAlert("User does not exist");
                 setAlertStatus('text-danger');
             }
-            setAlert(registerResult.state.alert);
+            else {
+                resetPasswordNavigate("/reset_password", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            }
         }
-    });
+    };
 
     return (
         <div>
@@ -81,16 +64,8 @@ function ForgotPassword() {
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email" placeholder="Enter email" required onChange={event => setEmail(event.target.value)}/>
                                     </Form.Group>
-
-                                    <Form.Group className="mb-4" controlId="password">
-                                        <Form.Label>Secret Code</Form.Label>
-                                        <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
-                                    </Form.Group>
-                                    <Button variant="dark" type="button" onClick={registerHandler}>
+                                    <Button variant="dark" type="button" onClick={forgotPasswordHandler}>
                                         Generate Code
-                                    </Button>
-                                    <Button variant="dark" type="button" onClick={registerHandler}>
-                                        Submit
                                     </Button>
                                 </Form>
                             </Card.Body>

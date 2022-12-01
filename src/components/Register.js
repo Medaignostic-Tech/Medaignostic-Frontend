@@ -8,6 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.css';
 import MainNavbar from './MainNavbar';
 import '../styles/Login.css'
+import auth from '../utils/auth';
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState} from 'react';
 import axios from 'axios';
@@ -31,22 +32,14 @@ function Register() {
             setAlert("Passwords did not match");
         }
         else {
-            await axios.post(`http://localhost/register`, {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'age': age,
-            'gender': gender,
-            'password': password,
-            })
-            .then(res => {
-                if (res.data.registration_status === "success") {
-                    loginNavigate("/login", {replace:true, state:{"alert_status":"success", "alert":"Registration Successful"}});
-                }
-                if (res.data.registration_status === "user_exists") {
-                    loginNavigate("/login", {replace:true, state:{"alert_status":"failure", "alert":"User Already Exists"}});
-                }
-            });
+            const response = auth.register(name, email, phone, age, gender, password);
+            const status = await response;
+            if (status[1] === "success") {
+                loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            }
+            else if (status[1] === "failure") {
+                loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            }
         }
     }
 

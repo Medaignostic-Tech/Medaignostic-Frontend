@@ -117,6 +117,36 @@ class Auth {
             });
         return response;
     }
+
+    resetPassword = async(secretCode, newPassword) => {
+        var response = [];
+        const formData = {
+            "token": secretCode,
+            "password": newPassword
+        };
+        await axios.post(`http://localhost/auth/reset-password`, formData)
+            .then(res => {
+                const data = res.data;
+                if (data === null) {
+                    response = ["Password changed successfully", "success"];
+                } else {
+                    response = ["API Error", "failure"];
+                }
+            })
+            .catch(err => {
+                if (err.response.status === 400) {
+                    const data = err.response.data;
+                    if (data.detail === "RESET_PASSWORD_BAD_TOKEN") {
+                        response = ["Invalid Secret Code", "failure"];
+                    } else {
+                        response = ["Password Validation Failed", "failure"];
+                    }
+                } else {
+                    response = ["Internal Server Error", "failure"];
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

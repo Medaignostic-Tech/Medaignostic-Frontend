@@ -34,12 +34,7 @@ function Register() {
         else {
             const response = auth.register(name, email, phone, age, gender, password);
             const status = await response;
-            if (status[1] === "success") {
-                loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
-            }
-            else if (status[1] === "failure") {
-                loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
-            }
+            loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
         }
     }
 

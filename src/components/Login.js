@@ -22,14 +22,12 @@ function Login() {
     const loginResult = useLocation();
     const dashboardNavigate = useNavigate();
 
-    const loginHandler = async () => {
+    const loginHandler = async (event) => {
+        event.preventDefault();
         const response = auth.login(email, password);
         const status = await response;
         setAlert(status[0]);
         setAlertStatus(status[1]);
-        if (status[0] === "Login Success") {
-            dashboardNavigate("/dashboard");
-        }
     };
 
     useEffect(() => {
@@ -42,7 +40,11 @@ function Login() {
             }
             setAlert(loginResult.state.alert);
         }
-    });
+        else if (alert === "Login Success") {
+            dashboardNavigate("/dashboard", {replace: true});
+            dashboardNavigate(0);
+        }
+    }, [alert]);
 
     return (
         <div>
@@ -73,7 +75,7 @@ function Login() {
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control type="password" placeholder="Password" required onChange={event => setPassword(event.target.value)}/>
                                     </Form.Group>
-                                    <Button variant="dark" type="button" onClick={loginHandler}>
+                                    <Button variant="dark" type="submit" onClick={loginHandler}>
                                         Submit
                                     </Button>
                                 </Form>

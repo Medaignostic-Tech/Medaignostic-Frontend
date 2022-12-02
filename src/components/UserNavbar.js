@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 function UserNavbar() {
     const history = useNavigate();
 
-    const callLogout = async () => {
+    const callLogout = () => {
         auth.logout(() => {
-            history("/");
+            history("/login", {replace: true});
         })
     }
 

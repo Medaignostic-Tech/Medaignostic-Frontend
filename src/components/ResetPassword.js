@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function Register() {
+function ResetPassword() {
     const loginNavigate = useNavigate();
 
     const [secretCode, setSecretCode] = useState('');
@@ -79,4 +79,4 @@ function Register() {
     )
 }
 
-export default Register;
+export default ResetPassword;

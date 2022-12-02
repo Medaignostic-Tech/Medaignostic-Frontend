@@ -11,7 +11,6 @@ import '../styles/Login.css'
 import auth from '../utils/auth';
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState} from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 

@@ -11,7 +11,7 @@ import '../styles/Login.css'
 import auth from '../utils/auth';
 import logo from '../assets/Medaignostic-logos.jpeg';
 import React, {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function Login() {
     const [alert, setAlert] = useState('');
@@ -20,12 +20,16 @@ function Login() {
     const [password, setPassword] = useState('');
 
     const loginResult = useLocation();
+    const dashboardNavigate = useNavigate();
 
     const loginHandler = async () => {
         const response = auth.login(email, password);
         const status = await response;
         setAlert(status[0]);
         setAlertStatus(status[1]);
+        if (status[0] === "Login Success") {
+            dashboardNavigate("/dashboard");
+        }
     };
 
     useEffect(() => {

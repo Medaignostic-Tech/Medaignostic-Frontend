@@ -147,6 +147,20 @@ class Auth {
             });
         return response;
     }
+
+    isAuthenticated = () => {
+        const permissions = localStorage.getItem('permissions');
+        if (!permissions) {
+            return false;
+        }
+        return permissions === 'user' ? true : false;
+    }
+
+    logout = (callback) => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('permissions');
+        callback();
+    }
 }
 
 export default new Auth();

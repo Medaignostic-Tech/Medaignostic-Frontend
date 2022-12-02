@@ -20,11 +20,13 @@ function ForgotPassword() {
     const [email, setEmail] = useState('');
 
 
-    const forgotPasswordHandler = async () => {
+    const forgotPasswordHandler = async (event) => {
+        event.preventDefault();
         const response = auth.forgotPassword(email);
         const status = await response;
         if (status[1] === "success") {
             resetPasswordNavigate("/reset_password", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            resetPasswordNavigate(0);
         }
         else if (status[1] === "failure") {
             if (status[0] === "User does not exist") {
@@ -33,6 +35,7 @@ function ForgotPassword() {
             }
             else {
                 resetPasswordNavigate("/reset_password", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+                resetPasswordNavigate(0);
             }
         }
     };

@@ -22,7 +22,8 @@ function ResetPassword() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [alert, setAlert] = useState('');
 
-    const resetPasswordHandler = async () => {
+    const resetPasswordHandler = async (event) => {
+        event.preventDefault();
         if (newPassword !== confirmPassword) {
             setAlert("Passwords did not match");
         }
@@ -30,6 +31,7 @@ function ResetPassword() {
             const response = auth.resetPassword(secretCode, newPassword);
             const status = await response;
             loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            loginNavigate(0);
         }
     }
 

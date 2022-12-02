@@ -26,7 +26,8 @@ function Register() {
     const [confirm_password, setConfirmPassword] = useState('');
     const [alert, setAlert] = useState('');
 
-    const registerHandler = async () => {
+    const registerHandler = async (event) => {
+        event.preventDefault();
         if (password !== confirm_password) {
             setAlert("Passwords did not match");
         }
@@ -34,6 +35,7 @@ function Register() {
             const response = auth.register(name, email, phone, age, gender, password);
             const status = await response;
             loginNavigate("/login", {replace:true, state:{"alert_status":status[1], "alert":status[0]}});
+            loginNavigate(0);
         }
     }
 

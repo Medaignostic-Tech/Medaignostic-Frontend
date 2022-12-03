@@ -25,6 +25,10 @@ function UserNavbar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />  
                     <Navbar.Collapse id="basic-navbar-nav">  
                         <Nav className="me-auto">
+                            <Nav.Link href="/dashboard">Home</Nav.Link>
+                            <Nav.Link href="/upload_reports">Upload</Nav.Link>
+                            <Nav.Link href="/history">History</Nav.Link>
+                            &nbsp;&nbsp;&nbsp;
                             <Button variant="outline-light" onClick={callLogout}>Logout</Button>
                         </Nav>
                     </Navbar.Collapse>

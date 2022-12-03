@@ -21,7 +21,7 @@ function UserDashboard() {
             if (auth.isAuthenticated()) {
                 const result = await auth.getUser();
                 if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
-                    loginNavigate("/login", {replace:true, state:{"alert_status": result, "alert": "failure"}});
+                    loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
                     loginNavigate(0);
                 }
                 else {

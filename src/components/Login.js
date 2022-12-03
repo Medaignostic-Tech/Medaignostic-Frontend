@@ -31,7 +31,10 @@ function Login() {
     };
 
     useEffect(() => {
-        if (loginResult.state !== null) {
+        if (alert === "Login Success" || alert === "API Error" || alert === "Internal Server Error" || alert === "Invalid Login Credentials" || alert === "User is not verified") {
+            window.history.replaceState({}, document.title);
+        }
+        else if (loginResult.state !== null) {
             if (loginResult.state.alert_status === "success") {
                 setAlertStatus('text-success');
             }
@@ -40,7 +43,7 @@ function Login() {
             }
             setAlert(loginResult.state.alert);
         }
-        else if (alert === "Login Success") {
+        if (alert === "Login Success") {
             dashboardNavigate("/dashboard", {replace: true});
             dashboardNavigate(0);
         }

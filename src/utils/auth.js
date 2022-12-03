@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class Auth {
     login = async(email, password) => {
-        var response = [];
+        let response = [];
         const formData = new FormData();
         formData.append('username', email);
         formData.append('password', password);
@@ -49,7 +49,7 @@ class Auth {
     }
 
     register = async(name, email, phone, age, gender, password) => {
-        var response = [];
+        let response = [];
         const formData = {
             "name": name,
             "email": email,
@@ -87,7 +87,7 @@ class Auth {
     }
 
     forgotPassword = async(email) => {
-        var response = [];
+        let response = [];
         const formData = {
             "email": email
         }
@@ -119,7 +119,7 @@ class Auth {
     }
 
     resetPassword = async(secretCode, newPassword) => {
-        var response = [];
+        let response = [];
         const formData = {
             "token": secretCode,
             "password": newPassword
@@ -160,6 +160,29 @@ class Auth {
         localStorage.removeItem('token');
         localStorage.removeItem('permissions');
         callback();
+    }
+
+    getUser = async() => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        await axios.get(`http://localhost/users/me`, verificationData)
+            .then(res => {
+                const data = res.data;
+                response = data;
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
     }
 }
 

@@ -30,7 +30,7 @@ function UserDashboard() {
             }
         }
         fetchData();
-    })
+    }, []);
 
     return (
         <div>

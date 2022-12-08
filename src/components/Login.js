@@ -52,7 +52,7 @@ function Login() {
     return (
         <div>
             <MainNavbar />
-            <Container className='login-content' fluid={true}>
+            <Container className='login-content common-background' fluid={true}>
                 <Row className='justify-content-md-center login-form'>
                     <Col md={{span:3}}>
                         <Card className='main-login mb-2' bg='light' text='dark' border='dark'>

@@ -42,7 +42,7 @@ function Register() {
     return (
         <div>
             <MainNavbar />
-            <Container className='register-content' fluid={true}>
+            <Container className='register-content common-background' fluid={true}>
                 <Row className='justify-content-md-center login-form'>
                     <Col md={{span:4}}>
                         <Card className='main-login mb-2' bg='light' text='dark' border='dark'>

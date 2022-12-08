@@ -6,12 +6,13 @@ import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import UserDashboard from "./components/UserDashboard";
+import UploadReports from "./components/UploadReports";
 import auth from './utils/auth';
 import './App.css';
 
 function App() {
     return ( 
-    <div className = "App">
+    <div className = "App" style={{ backgroundColor: "aquamarine" }}>
         <BrowserRouter>
             <Routes>
                 <Route path = "/" exact element={<Home />}></Route> 
@@ -21,6 +22,7 @@ function App() {
                 <Route path = "/forgot_password" exact element={<ForgotPassword />}></Route>
                 <Route path = "/reset_password" exact element={<ResetPassword />}></Route>
                 <Route path = "/dashboard" exact element={auth.isAuthenticated() ? <UserDashboard /> : <Navigate to="/login" />}></Route>
+                <Route path = "/upload_reports" exact element={auth.isAuthenticated() ? <UploadReports /> : <Navigate to="/login" />}></Route>
             </Routes> 
         </BrowserRouter> 
     </div>

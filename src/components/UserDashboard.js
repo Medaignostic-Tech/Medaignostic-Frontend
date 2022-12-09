@@ -37,7 +37,7 @@ function UserDashboard() {
             <UserNavbar />
             <p>Hello { user.name }</p>
         </div>
-    )
+    );
 }
 
 export default UserDashboard;

@@ -28,6 +28,7 @@ function UserNavbar() {
                             <Nav.Link href="/dashboard">Home</Nav.Link>
                             <Nav.Link href="/upload_reports">Upload</Nav.Link>
                             <Nav.Link href="/history">History</Nav.Link>
+                            <Nav.Link href="/profile">Profile</Nav.Link>
                             &nbsp;&nbsp;&nbsp;
                             <Button variant="outline-light" onClick={callLogout}>Logout</Button>
                         </Nav>

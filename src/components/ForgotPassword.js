@@ -41,7 +41,7 @@ function ForgotPassword() {
     };
 
     return (
-        <div>
+        <div className="common-background">
             <MainNavbar />
             <Container className='login-content' fluid={true}>
                 <Row className='justify-content-md-center login-form'>

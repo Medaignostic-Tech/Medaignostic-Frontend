@@ -36,7 +36,7 @@ function ResetPassword() {
     }
 
     return (
-        <div>
+        <div className="common-background">
             <MainNavbar />
             <Container className='register-content' fluid={true}>
                 <Row className='justify-content-md-center login-form'>

@@ -33,7 +33,7 @@ function UserDashboard() {
     }, []);
 
     return (
-        <div>
+        <div className="common-background">
             <UserNavbar />
             <p>Hello { user.name }</p>
         </div>

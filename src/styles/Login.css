@@ -5,13 +5,3 @@
 .main-login {
     font-size: x-large;
 }
-
-.login-content {
-    height: 100%;
-    min-height: 100vh;
-}
-
-.register-content {
-    height: 100%;
-    min-height: 100vh;
-}

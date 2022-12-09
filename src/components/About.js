@@ -2,7 +2,7 @@ import MainNavbar from './MainNavbar';
 
 function About() {
     return (
-        <div>
+        <div className="common-background">
             <MainNavbar />
         </div>
     );

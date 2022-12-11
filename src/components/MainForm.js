@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Form, Dropdown, DropdownButton } from 'react-bootstrap';
+import LungsForm from './LungsForm';
 
 function MainForm() {
     const [form, setForm] = useState(null);
 
     const handleSelect = (eventKey) => {
         if (eventKey === "lungs") {
-            setForm(<div>Lungs</div>); // Add Lungs Form here
+            setForm(<div><LungsForm /></div>);
         }
         else if (eventKey === "brain") {
             setForm(<div>Brain</div>); // Add Brain Form here
@@ -22,7 +23,7 @@ function MainForm() {
                 variant="dark"
                 menuVariant="dark"
                 title="Dropdown Menu"
-                style={{ marginBottom: '40px' }}
+                style={{ marginBottom: '20px' }}
                 onSelect={handleSelect}
                 size="lg"
             >

@@ -2,12 +2,14 @@ import decodeJwt from 'jwt-decode';
 import axios from 'axios';
 
 class Auth {
+    url = "http://localhost";
+
     login = async(email, password) => {
         let response = [];
         const formData = new FormData();
         formData.append('username', email);
         formData.append('password', password);
-        await axios.post(`http://localhost/auth/jwt/login`, formData)
+        await axios.post(`${this.url}/auth/jwt/login`, formData)
             .then(res => {
                 const data = res.data;
                 if ('access_token' in data) {
@@ -62,7 +64,7 @@ class Auth {
             "is_verified": false,
             "hashed_password": ""
         };
-        await axios.post(`http://localhost/auth/register`, formData)
+        await axios.post(`${this.url}/auth/register`, formData)
             .then(res => {
                 const data = res.data;
                 if ('id' in data) {
@@ -91,7 +93,7 @@ class Auth {
         const formData = {
             "email": email
         }
-        await axios.post(`http://localhost/auth/forgot-password`, formData)
+        await axios.post(`${this.url}/auth/forgot-password`, formData)
             .then(res => {
                 const data = res.data;
                 console.log(data);
@@ -124,7 +126,7 @@ class Auth {
             "token": secretCode,
             "password": newPassword
         };
-        await axios.post(`http://localhost/auth/reset-password`, formData)
+        await axios.post(`${this.url}/auth/reset-password`, formData)
             .then(res => {
                 const data = res.data;
                 if (data === null) {
@@ -170,7 +172,7 @@ class Auth {
                 Authorization: `Bearer ${token}`
             }
         };
-        await axios.get(`http://localhost/users/me`, verificationData)
+        await axios.get(`${this.url}/users/me`, verificationData)
             .then(res => {
                 const data = res.data;
                 response = data;
@@ -196,7 +198,7 @@ class Auth {
                 "organ": organ
             }
         };
-        await axios.get(`http://localhost/forms/`, verificationData)
+        await axios.get(`${this.url}/forms/`, verificationData)
             .then(res => {
                 const data = res.data;
                 response = data;

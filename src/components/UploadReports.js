@@ -75,7 +75,7 @@ function UploadReports() {
     };
     
     return (
-        <div style={{ height: "100%", minHeight: "100vh"}} className="common-background">
+        <div className="common-background">
             <UserNavbar />
             <Container fluid className="jumbotron text-white text-center" style={{ marginBottom: '20px' }}>
                 <Row>

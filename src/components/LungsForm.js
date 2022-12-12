@@ -24,7 +24,6 @@ function LungsForm() {
             }
         }
         fetchData();
-        console.log("hi");
     }, []);
 
     return (
@@ -44,7 +43,6 @@ function LungsForm() {
                                         if (element.type === "radio") {
                                             f = (
                                                 <Form.Group className="mb-3">
-                                                    <hr style={{ height: "5px", background: "black"}} />
                                                     <Form.Label>{ element.label } </Form.Label><br />
                                                         {element.option.map((options) => {
                                                             let ele = (
@@ -52,15 +50,31 @@ function LungsForm() {
                                                             );
                                                             return ele;
                                                         })}
+                                                    <hr style={{ height: "5px", background: "black"}} />
                                                 </Form.Group>
                                             );
                                         }
                                         else if (element.type === "text" || element.type === "number") {
                                             f = (
                                                 <Form.Group className="mb-3">
-                                                    <hr style={{ height: "5px", background: "black"}} />
                                                     <Form.Label>{ element.label } </Form.Label><br />
-                                                        <Form.Control inline name={element.name} type={element.type} placeholder={element.option[0]} />
+                                                    <Form.Control inline name={element.name} type={element.type} placeholder={element.option[0]} />
+                                                    <hr style={{ height: "5px", background: "black"}} />
+                                                </Form.Group>
+                                            );
+                                        }
+                                        else if (element.type === "file") {
+                                            let ele = "";
+                                            for (const option of element.option) {
+                                                ele += option + ", ";
+                                            }
+                                            ele = ele.substring(0, ele.length-2);
+                                            console.log(ele);
+                                            f = (
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>{ element.label } </Form.Label><br />
+                                                    <Form.Control inline name={element.name} type={element.type} accept={ele} />
+                                                    <hr style={{ height: "5px", background: "black"}} />
                                                 </Form.Group>
                                             );
                                         }

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import LungsForm from './LungsForm';
 
-function MainForm() {
+function MainForm(props) {
     const [form, setForm] = useState(null);
 
     const handleSelect = (eventKey) => {
         if (eventKey === "lungs") {
-            setForm(<div><LungsForm /></div>);
+            setForm(<div><LungsForm setForm={props.setForm} /></div>);
         }
         else if (eventKey === "brain") {
             setForm(<div>Brain</div>); // Add Brain Form here
@@ -18,7 +18,7 @@ function MainForm() {
     }
 
     return (
-        <div>
+        <Form>
             <DropdownButton
                 variant="dark"
                 menuVariant="dark"
@@ -32,11 +32,11 @@ function MainForm() {
                 <Dropdown.Item eventKey="skin">Skin</Dropdown.Item>
             </DropdownButton>
             {form && (
-                <Form>
+                <div>
                 {form}
-                </Form>
+                </div>
             )}
-        </div>
+        </Form>
     );
 }
 

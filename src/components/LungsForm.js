@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
 
 
-function LungsForm() {
+function LungsForm(props) {
     const loginNavigate = useNavigate();
 
     const [response, setResponse] = useState([]);
@@ -37,7 +37,7 @@ function LungsForm() {
                                 <h1>Lungs</h1>
                             </Card.Header>
                             <Card.Body>
-                                <Form>
+                                <Form name='lungs'>
                                     { response.map((element) => {
                                         let f;
                                         if (element.type === "radio") {
@@ -46,11 +46,11 @@ function LungsForm() {
                                                     <Form.Label>{ element.label } </Form.Label><br />
                                                         {element.option.map((options) => {
                                                             let ele = (
-                                                                <Form.Check inline name={ element.name } type="radio" placeholder={options} label={options} />
+                                                                <Form.Check inline name={ element.name } type="radio" placeholder={options} label={options} value={options} onChange={props.setForm} />
                                                             );
                                                             return ele;
                                                         })}
-                                                    <hr style={{ height: "5px", background: "black"}} />
+                                                    <hr style={{ height: "3px", background: "black"}} />
                                                 </Form.Group>
                                             );
                                         }
@@ -58,8 +58,8 @@ function LungsForm() {
                                             f = (
                                                 <Form.Group className="mb-3">
                                                     <Form.Label>{ element.label } </Form.Label><br />
-                                                    <Form.Control inline name={element.name} type={element.type} placeholder={element.option[0]} />
-                                                    <hr style={{ height: "5px", background: "black"}} />
+                                                    <Form.Control inline name={element.name} type={element.type} placeholder={element.option[0]} onChange={props.setForm} />
+                                                    <hr style={{ height: "3px", background: "black"}} />
                                                 </Form.Group>
                                             );
                                         }
@@ -69,12 +69,11 @@ function LungsForm() {
                                                 ele += option + ", ";
                                             }
                                             ele = ele.substring(0, ele.length-2);
-                                            console.log(ele);
                                             f = (
                                                 <Form.Group className="mb-3">
                                                     <Form.Label>{ element.label } </Form.Label><br />
-                                                    <Form.Control inline name={element.name} type={element.type} accept={ele} />
-                                                    <hr style={{ height: "5px", background: "black"}} />
+                                                    <Form.Control inline name={element.name} type={element.type} accept={ele} onChange={props.setForm}/>
+                                                    <hr style={{ height: "3px", background: "black"}} />
                                                 </Form.Group>
                                             );
                                         }

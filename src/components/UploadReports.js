@@ -35,6 +35,19 @@ function UploadReports() {
 
     const [forms, setForms] = useState([]);
     const [formId, setFormId] = useState(0);
+    const [mainForms, setMainForms] = useState({});
+
+    const updateForm = (e) => {
+        let key = e.target.form.name + "_" + e.target.name;
+        let value;
+        if (e.target.type === "file") {
+            value = e.target.files;
+        }
+        else {
+            value = e.target.value;
+        }
+        mainForms[key] = value;
+    }
     
     const addForm = () => {
         const newId = formId + 1;
@@ -58,7 +71,7 @@ function UploadReports() {
     };
 
     const submitForm = async () => {
-
+        console.log(mainForms);
     };
     
     return (
@@ -77,7 +90,7 @@ function UploadReports() {
                 </Row>
             </Container>
             {forms.map((form, index) => {
-                return <MainForm />
+                return <MainForm setForm={ updateForm } />
             })}
 
         <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => addForm()} size="lg">+</Button>

@@ -184,6 +184,32 @@ class Auth {
             });
         return response;
     }
+
+    getForms = async(organ) => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                "organ": organ
+            }
+        };
+        await axios.get(`http://localhost/forms/`, verificationData)
+            .then(res => {
+                const data = res.data;
+                response = data;
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

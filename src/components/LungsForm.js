@@ -1,83 +1,32 @@
 import { Card, Container, Row, Col, Form } from 'react-bootstrap';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/Medaignostic-logos.jpeg';
+import { useNavigate } from "react-router-dom";
+import auth from "../utils/auth";
 
-const sampleResponse = [
-    {
-        "type": "radio",
-        "label": "Do you feel fewerish ?",
-        "name": "q1",
-        "option": ["Yes", "No"] 
-    },
-    {
-        "type": "radio",
-        "label": "Do you cough often ?",
-        "name": "q2",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you see any kind of sputum or mucus ?",
-        "name": "q3",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "number",
-        "label": "How long have you had the cough (in days) ?",
-        "name": "q4",
-        "option": ["Cough Symptom (Type -1 NA for Not Applicable)"]
-    },
-    {
-        "type": "text",
-        "label": "What color is the mucus ?",
-        "name": "q5",
-        "option": ["Mucus Color (Type NA for Not Applicable)"]
-    },
-    {
-        "type": "radio",
-        "label": "Is mucus thick and ciscous or thin and runny ?",
-        "name": "q6",
-        "option": ["Thick and Ciscous", "Thin and Runny"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you have chest discomfort with cough ?",
-        "name": "q7",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you feel you have to work hard to breathe ?",
-        "name": "q8",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you experience wheezing with your shortness of breath ?",
-        "name": "q9",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you ever have night sweats ?",
-        "name": "q10",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Do you feel 'tightness' more in your throat, or in your lungs ?",
-        "name": "q11",
-        "option": ["Yes", "No"]
-    },
-    {
-        "type": "radio",
-        "label": "Have you lost weight recently ?",
-        "name": "q12",
-        "option": ["Yes", "No"]
-    }
-];
 
 function LungsForm() {
+    const loginNavigate = useNavigate();
+
+    const [response, setResponse] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (auth.isAuthenticated()) {
+                const result = await auth.getForms("lungs");
+                if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
+                    loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
+                    loginNavigate(0);
+                }
+                else {
+                    setResponse(result);
+                }
+            }
+        }
+        fetchData();
+        console.log("hi");
+    }, []);
+
     return (
         <div style={{ marginBottom: '40px' }}>
             <Container className='login-content' fluid={true}>
@@ -90,7 +39,7 @@ function LungsForm() {
                             </Card.Header>
                             <Card.Body>
                                 <Form>
-                                    { sampleResponse.map((element) => {
+                                    { response.map((element) => {
                                         let f;
                                         if (element.type === "radio") {
                                             f = (

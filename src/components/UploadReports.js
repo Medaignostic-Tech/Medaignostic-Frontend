@@ -45,7 +45,7 @@ function UploadReports() {
                 formId: formId
             }
         ]);
-    }
+    };
 
     const deleteForm = () => {
         const updatedItems = forms.concat();
@@ -55,7 +55,11 @@ function UploadReports() {
             const newId = formId - 1;
             setFormId(newId);
         } 
-    }
+    };
+
+    const submitForm = async () => {
+
+    };
     
     return (
         <div style={{ height: "100%", minHeight: "100vh"}} className="common-background">
@@ -76,8 +80,9 @@ function UploadReports() {
                 return <MainForm />
             })}
 
-        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => addForm("add")} size="lg">+</Button>
-        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => deleteForm("delete")} size="lg">-</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => addForm()} size="lg">+</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => deleteForm()} size="lg">-</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => submitForm()} size="lg">Submit</Button>
         </div>
     );
 }

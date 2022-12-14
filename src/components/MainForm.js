@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Dropdown, DropdownButton } from 'react-bootstrap';
-import LungsForm from './LungsForm';
+import OrganForm from './OrganForm';
+import auth from "../utils/auth";
 
 function MainForm(props) {
     const [form, setForm] = useState(null);
+    const loginNavigate = useNavigate();
+
+    const [response, setResponse] = useState([]);
 
     const handleSelect = (eventKey) => {
-        if (eventKey === "lungs") {
-            setForm(<div><LungsForm setForm={props.setForm} /></div>);
-        }
-        else if (eventKey === "brain") {
-            setForm(<div>Brain</div>); // Add Brain Form here
-        }
-        else if (eventKey === "skin") {
-            setForm(<div>Skin</div>); // Add Skin Form here
-        }
+        setForm(<div><OrganForm setForm={props.setForm} organ={eventKey} /></div>);
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (auth.isAuthenticated()) {
+                const result = await auth.getOrgans();
+                if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
+                    loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
+                    loginNavigate(0);
+                }
+                else {
+                    setResponse(result);
+                }
+            }
+        }
+        fetchData();
+    }, []);
 
     return (
         <Form>
@@ -27,9 +40,9 @@ function MainForm(props) {
                 onSelect={handleSelect}
                 size="lg"
             >
-                <Dropdown.Item eventKey="lungs" variant="danger">Lungs</Dropdown.Item>
-                <Dropdown.Item eventKey="brain">Brain</Dropdown.Item>
-                <Dropdown.Item eventKey="skin">Skin</Dropdown.Item>
+                {response.map((organ, index) => (
+                    <Dropdown.Item eventKey={organ}>{organ.charAt(0).toUpperCase() + organ.slice(1)}</Dropdown.Item>
+                ))}
             </DropdownButton>
             {form && (
                 <div>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
 
 
-function LungsForm(props) {
+function OrganForm(props) {
     const loginNavigate = useNavigate();
 
     const [response, setResponse] = useState([]);
@@ -13,7 +13,7 @@ function LungsForm(props) {
     useEffect(() => {
         const fetchData = async () => {
             if (auth.isAuthenticated()) {
-                const result = await auth.getForms("lungs");
+                const result = await auth.getForms(props.organ);
                 if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
                     loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
                     loginNavigate(0);
@@ -34,10 +34,10 @@ function LungsForm(props) {
                         <Card className='main-login mb-2' bg='light' text='dark' border='dark'>
                             <Card.Img variant="top" src={ logo } height="300em" />
                             <Card.Header>
-                                <h1>Lungs</h1>
+                                <h1>{ props.organ.charAt(0).toUpperCase() + props.organ.slice(1)}</h1>
                             </Card.Header>
                             <Card.Body>
-                                <Form name='lungs'>
+                                <Form name={props.organ}>
                                     { response.map((element) => {
                                         let f;
                                         if (element.type === "radio") {
@@ -89,4 +89,4 @@ function LungsForm(props) {
     )
 }
 
-export default LungsForm;
+export default OrganForm;

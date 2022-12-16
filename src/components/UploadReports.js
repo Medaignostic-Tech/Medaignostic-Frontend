@@ -35,18 +35,18 @@ function UploadReports() {
 
     const [forms, setForms] = useState([]);
     const [formId, setFormId] = useState(0);
-    const [mainForms, setMainForms] = useState({});
+    const [mainForms, setMainForms] = useState(new FormData());
 
     const updateForm = (e) => {
         let key = e.target.form.name + "_" + e.target.name;
         let value;
         if (e.target.type === "file") {
-            value = e.target.files;
+            value = e.target.files[0];
         }
         else {
             value = e.target.value;
         }
-        mainForms[key] = value;
+        mainForms.append(key, value);
     }
     
     const addForm = () => {
@@ -72,6 +72,12 @@ function UploadReports() {
 
     const submitForm = async () => {
         console.log(mainForms);
+        const result = await auth.sendData(mainForms);
+        if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
+            loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
+            loginNavigate(0);
+        }
+        console.log(result);
     };
     
     return (

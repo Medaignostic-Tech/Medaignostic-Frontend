@@ -235,6 +235,28 @@ class Auth {
             });
         return response;
     }
+
+    sendData = async(formData) => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        await axios.post(`${this.url}/validations/validate`, formData, verificationData)
+            .then(res => {
+                response = res.data;
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

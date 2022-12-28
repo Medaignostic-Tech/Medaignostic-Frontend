@@ -71,13 +71,8 @@ function UploadReports() {
     };
 
     const submitForm = async () => {
-        console.log(mainForms);
-        const result = await auth.sendData(mainForms);
-        if (result === "Invalid or Inactive User" || result === "Internal Server Error") {
-            loginNavigate("/login", {replace:true, state:{"alert_status": "failure", "alert": result}});
-            loginNavigate(0);
-        }
-        console.log(result);
+        loginNavigate("/report", {replace:true, state:{"mainForms": Object.fromEntries(mainForms)}});
+        loginNavigate(0);
     };
     
     return (

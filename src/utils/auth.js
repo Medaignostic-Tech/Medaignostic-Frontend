@@ -244,9 +244,13 @@ class Auth {
                 Authorization: `Bearer ${token}`
             }
         };
-        await axios.post(`${this.url}/validations/validate`, formData, verificationData)
+        const form = new FormData();
+        for (let key in formData) {
+            form.append(key, formData[key]);
+        }
+        await axios.post(`${this.url}/validations/validate`, form, verificationData)
             .then(res => {
-                response = res.data;
+                response = res.data.combined_response;
             })
             .catch(err => {
                 if (err.response.status === 401) {

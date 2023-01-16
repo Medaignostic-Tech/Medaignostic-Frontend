@@ -30,7 +30,18 @@ function UserNavbar() {
                             <Nav.Link href="/history">History</Nav.Link>
                             <Nav.Link href="/profile">Profile</Nav.Link>
                             &nbsp;&nbsp;&nbsp;
-                            <Button variant="outline-light" onClick={callLogout}>Logout</Button>
+                            <button type="button" className="logout-btn logout-cube logout-cube-hover" style={{marginTop: '0.7em'}} onClick={callLogout}>
+                                <div className="logout-bg-top">
+                                    <div className="logout-bg-inner"></div>
+                                </div>
+                                <div className="logout-bg-right">
+                                    <div className="logout-bg-inner"></div>
+                                </div>
+                                <div className="logout-bg">
+                                    <div className="logout-bg-inner"></div>
+                                </div>
+                                <div className="logout-text">Logout</div>
+                            </button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

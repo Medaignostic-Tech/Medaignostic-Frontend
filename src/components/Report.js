@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useNavigate, useLocation } from "react-router-dom";
 import auth from "../utils/auth";
 import UserNavbar from './UserNavbar';
+import ReportPdf from './ReportPdf';
 
 function ViewReports() {
     const [loading, setLoading] = useState(true);
@@ -84,7 +85,7 @@ function ViewReports() {
                                     {response[key]["result"] && Object.keys(response[key]["result"]).map(k => {
                                         let value = response[key]["result"][k];
                                         return (
-                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
+                                            <ReportPdf />
                                         )
                                     })}
                                 </div>

@@ -19,7 +19,6 @@ function ViewReports() {
     });
 
     const [response, setResponse] = useState({});
-    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {

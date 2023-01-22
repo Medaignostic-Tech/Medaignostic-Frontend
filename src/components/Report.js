@@ -19,6 +19,7 @@ function ViewReports() {
     });
 
     const [response, setResponse] = useState({});
+    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,8 +57,8 @@ function ViewReports() {
             </div>
         );
     }
-
-    return (
+    else {
+        return (
         <div className="common-background">
             <UserNavbar />
             <Container fluid className="jumbotron text-white text-center" style={{ marginBottom: '20px' }}>
@@ -69,17 +70,33 @@ function ViewReports() {
                 <Row>
                     <Col>
                         {Object.keys(response).map(key => {
-                            for (const k in response[key]) {
-                                return (
-                                    <p style={{marginTop: "50px"}}>{ k } : { response[key][k] }</p>
-                                )
-                            }
+                            return (
+                                <div>
+                                    {response[key]["parameters"] && Object.keys(response[key]["parameters"]).map(k => {
+                                        let value = response[key]["parameters"][k];
+                                        if (typeof value === "boolean") {
+                                            value = value? "Yes" : "No";
+                                        }
+                                        return (
+                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
+                                        );
+                                    })}
+
+                                    {response[key]["result"] && Object.keys(response[key]["result"]).map(k => {
+                                        let value = response[key]["result"][k];
+                                        return (
+                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
+                                        )
+                                    })}
+                                </div>
+                            )
                         })}
                     </Col>
                 </Row>
             </Container>
         </div>
     );
+    }
 }
 
 export default ViewReports;

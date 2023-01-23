@@ -19,7 +19,7 @@ function ReportPdf() {
     }, []);
 
     return (
-        <div></div>
+        <div>Hi</div>
     )
 }
 

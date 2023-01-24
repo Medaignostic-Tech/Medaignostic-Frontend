@@ -85,9 +85,11 @@ function ViewReports() {
                                     {response[key]["result"] && Object.keys(response[key]["result"]).map(k => {
                                         let value = response[key]["result"][k];
                                         return (
-                                            <ReportPdf />
+                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
                                         )
                                     })}
+
+                                    {response[key]["prediction"] && <p style={{marginTop: "50px"}}>{ response[key]["prediction"] } : { response[key]["percentage"] } %</p>}
                                 </div>
                             )
                         })}

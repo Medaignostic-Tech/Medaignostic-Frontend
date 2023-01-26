@@ -4,12 +4,6 @@ import auth from "../utils/auth";
 
 function ReportPdf(props) {
     const loginNavigate = useNavigate();
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
-
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-    }
 
     useEffect(() => {
         const fetchData = async () => {

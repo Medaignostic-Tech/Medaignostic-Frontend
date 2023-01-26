@@ -242,15 +242,16 @@ class Auth {
         const verificationData = {
             headers: {
                 Authorization: `Bearer ${token}`
-            }
+            },
+            responseType: "blob"
         };
         const form = new FormData();
         for (let key in formData) {
             form.append(key, formData[key]);
         }
-        await axios.post(`${this.url}/validations/validate`, form, verificationData)
+        await axios.post(`${this.url}/validations/validate`, form, verificationData, { responseType: "blob" })
             .then(res => {
-                response = res.data.combined_response;
+                response = res;
             })
             .catch(err => {
                 if (err.response.status === 401) {

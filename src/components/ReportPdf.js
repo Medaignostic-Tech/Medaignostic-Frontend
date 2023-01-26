@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import auth from "../utils/auth";
 
-function ReportPdf() {
+function ReportPdf(props) {
     const loginNavigate = useNavigate();
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +25,9 @@ function ReportPdf() {
     }, []);
 
     return (
-        <div></div>
+        <div>
+            <object data={props.url} type="application/pdf" width ="50%" height="850vh"></object>
+        </div>
     )
 }
 

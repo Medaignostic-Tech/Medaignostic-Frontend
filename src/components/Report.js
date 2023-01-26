@@ -32,7 +32,8 @@ function ViewReports() {
                 else {
                     setUser(result);
                     if (uploadResult.state !== null) {
-                        const res = await auth.sendData(uploadResult.state.mainForms);
+                        let res = await auth.sendData(uploadResult.state.mainForms);
+                        res = await res.data;
                         setResponse(res);
                         setLoading(false);
                     }
@@ -59,7 +60,7 @@ function ViewReports() {
     }
     else {
         return (
-        <div className="common-background">
+        <div className="common-background" style={{minHeight: "130vh"}}>
             <UserNavbar />
             <Container fluid className="jumbotron text-white text-center" style={{ marginBottom: '20px' }}>
                 <Row>
@@ -67,32 +68,12 @@ function ViewReports() {
                         <h1 className="display-3">Report Result</h1>
                     </Col>
                 </Row>
+                <br /><br />
                 <Row>
                     <Col>
-                        {Object.keys(response).map(key => {
-                            return (
-                                <div>
-                                    {response[key]["parameters"] && Object.keys(response[key]["parameters"]).map(k => {
-                                        let value = response[key]["parameters"][k];
-                                        if (typeof value === "boolean") {
-                                            value = value? "Yes" : "No";
-                                        }
-                                        return (
-                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
-                                        );
-                                    })}
-
-                                    {response[key]["result"] && Object.keys(response[key]["result"]).map(k => {
-                                        let value = response[key]["result"][k];
-                                        return (
-                                            <p style={{marginTop: "50px"}}>{ k } : { value }</p>
-                                        )
-                                    })}
-
-                                    {response[key]["prediction"] && <p style={{marginTop: "50px"}}>{ response[key]["prediction"] } : { response[key]["percentage"] } %</p>}
-                                </div>
-                            )
-                        })}
+                        <div>
+                            <ReportPdf url={URL.createObjectURL(response)} />
+                        </div>
                     </Col>
                 </Row>
             </Container>

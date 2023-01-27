@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
 import UserNavbar from './UserNavbar';
 import MainForm from './MainForm';
+import OrganForm from './OrganForm';
 
 function UploadReports() {
     const loginNavigate = useNavigate();
@@ -90,6 +91,7 @@ function UploadReports() {
                     </Col>
                 </Row>
             </Container>
+            <div><OrganForm setForm={ updateForm } organ="general" /></div>
             {forms.map((form, index) => {
                 return <MainForm setForm={ updateForm } />
             })}

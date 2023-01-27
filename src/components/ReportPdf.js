@@ -20,7 +20,7 @@ function ReportPdf(props) {
 
     return (
         <div>
-            <object data={props.url} type="application/pdf" width ="50%" height="850vh"></object>
+            <object data={props.url} type="application/pdf" width ="45%" height="850vh"></object>
         </div>
     )
 }

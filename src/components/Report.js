@@ -32,6 +32,11 @@ function ViewReports() {
                 else {
                     setUser(result);
                     if (uploadResult.state !== null) {
+                        if (Object.keys(uploadResult.state.mainForms).length === 0) {
+                            alert("Invalid Data. Enter the data again!!");
+                            loginNavigate("/dashboard");
+                            loginNavigate(0);
+                        }
                         let res = await auth.sendData(uploadResult.state.mainForms);
                         res = await res.data;
                         setResponse(res);

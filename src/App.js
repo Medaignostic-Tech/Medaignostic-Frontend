@@ -9,6 +9,7 @@ import UserDashboard from "./components/UserDashboard";
 import UploadReports from "./components/UploadReports";
 import Profile from "./components/Profile";
 import ViewReports from "./components/Report";
+import VerifyReports from "./components/VerifyReports"
 import auth from './utils/auth';
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
                 <Route path = "/upload_reports" exact element={auth.isAuthenticated() ? <UploadReports /> : <Navigate to="/login" />}></Route>
                 <Route path = "/profile" exact element={auth.isAuthenticated() ? <Profile /> : <Navigate to="/login" />}></Route>
                 <Route path = "/report" exact element={auth.isAuthenticated() ? <ViewReports /> : <Navigate to="/login" />}></Route>
+                <Route path = "/verify_reports" exact element={auth.isAuthenticated() ? <VerifyReports /> : <Navigate to="/login" />}></Route>
             </Routes> 
         </BrowserRouter> 
     </div>

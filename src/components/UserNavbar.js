@@ -27,7 +27,7 @@ function UserNavbar() {
                         <Nav className="me-auto">
                             <Nav.Link href="/dashboard">Home</Nav.Link>
                             <Nav.Link href="/upload_reports">Upload</Nav.Link>
-                            <Nav.Link href="/history">History</Nav.Link>
+                            <Nav.Link href="/verify_reports">Verify</Nav.Link>
                             <Nav.Link href="/profile">Profile</Nav.Link>
                             &nbsp;&nbsp;&nbsp;
                             <button type="button" className="logout-btn logout-cube logout-cube-hover" style={{marginTop: '0.7em'}} onClick={callLogout}>

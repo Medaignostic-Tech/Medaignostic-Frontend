@@ -20,6 +20,7 @@ function VerifyTable() {
         let comments  = verificationData[file_id];
         let response = await auth.approveReport(file_id, comments);
         if (response["update_status"]) {
+            alert("Approved Data Successfully");
             dashboardNavigate(0);
         }
         else {

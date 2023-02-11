@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
+import { Container, Row, Col } from 'react-bootstrap';
 import UserNavbar from './UserNavbar';
+import VerifyTable from './VerifyTable';
 
 function VerifyReports() {
     const loginNavigate = useNavigate();
@@ -34,7 +36,14 @@ function VerifyReports() {
     return (
         <div className='common-background'>
             <UserNavbar />
-            Verify Reports
+            <Container fluid className="jumbotron text-white text-center" style={{ marginBottom: '50px' }}>
+                <Row>
+                    <Col>
+                        <h1 className="display-3">Verify Reports</h1>
+                    </Col>
+                </Row>
+            </Container>
+            <VerifyTable />
         </div>
     )
 }

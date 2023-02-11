@@ -262,6 +262,87 @@ class Auth {
             });
         return response;
     }
+
+    getVerificationDataByPage = async(page) => {
+        const per_page = 10;
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                "page": page,
+                "per_page": per_page
+            }
+        };
+        await axios.get(`${this.url}/verification/get-reports`, verificationData)
+            .then(res => {
+                const data = res.data;
+                response = data;
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
+
+    viewVerificationReport = async(file_id) => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            responseType: "blob",
+            params: {
+                "file_id": file_id,
+            }
+        };
+        await axios.get(`${this.url}/verification/pdf`, verificationData, { responseType: "blob" })
+            .then(res => {
+                response = res;
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
+
+    approveReport = async(file_id, comments) => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const form = new FormData();
+        form.append("file_id", file_id);
+        form.append("comments", comments);
+        await axios.post(`${this.url}/verification/approve-reports`, form, verificationData)
+            .then(res => {
+                const data = res.data;
+                response = data;
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Pagination, Container, Row, Col, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from "../utils/auth";
 
 function VerifyTable() {
@@ -78,7 +78,7 @@ function VerifyTable() {
                                         <td>{item.formatted_date}</td>
                                         <td>{item.doctor_name}</td>
                                         <td>{item.validation_name}</td>
-                                        <td>{item.file_id}</td>
+                                        <td><Link to={`/view_verify_report/${item.file_id}`}>View Report</Link></td>
                                         <td>{item.status === 0 ? <textarea name={item.file_id} class="form-control" rows="2" placeholder='Enter your comments' onChange={async(e) => assignVerificationData(e)}></textarea> : <div>{item.comments}</div>}</td>
                                         <td>{item.status === 0 ? <Button variant='success' onClick={() => approveData(item.file_id)}>Approve</Button> : <div className="font-weight-bold p-2 text-success">Approved</div> }</td>
                                     </tr>

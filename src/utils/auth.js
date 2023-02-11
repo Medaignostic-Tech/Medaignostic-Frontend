@@ -305,7 +305,7 @@ class Auth {
         };
         await axios.get(`${this.url}/verification/pdf`, verificationData, { responseType: "blob" })
             .then(res => {
-                response = res;
+                response = res.data;
             })
             .catch(err => {
                 if (err.response.status === 401) {

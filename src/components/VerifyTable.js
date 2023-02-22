@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Pagination, Container, Row, Col, Button } from 'react-bootstrap';
+import { Table, Pagination, Container, Row, Col, Button, Modal, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from "../utils/auth";
+import "../styles/VerifyTable.css"
 
 function VerifyTable() {
     const [page, setPage] = useState(1);
     const [data, setData] = useState([]);
     const [verificationData, setVerificationData] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const dashboardNavigate = useNavigate();
 
@@ -17,6 +19,7 @@ function VerifyTable() {
     }
 
     const approveData = async (file_id) => {
+        setIsLoading(true);
         let comments  = verificationData[file_id];
         let response = await auth.approveReport(file_id, comments);
         if (response["update_status"]) {
@@ -27,6 +30,7 @@ function VerifyTable() {
             alert("Error approving report");
             dashboardNavigate(0);
         }
+        setIsLoading(false);
     }
 
     const handlePaginationForward = () => {
@@ -95,6 +99,11 @@ function VerifyTable() {
                         </Pagination>
                     </Col>
                 </Row>
+                <Modal show={isLoading} onHide={() => setIsLoading(false)}>
+                    <Modal.Body>
+                        <Spinner animation="border" /> Verifying......
+                    </Modal.Body>
+                </Modal>
             </Container>
         </div>
     )

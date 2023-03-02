@@ -343,6 +343,30 @@ class Auth {
             });
         return response;
     }
+
+    getUserStats = async() => {
+        const token = localStorage.getItem("token");
+        let response;
+        const verificationData = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        await axios.get(`${this.url}/dashboard/get-user-stats`, verificationData)
+            .then(res => {
+                const data = res.data;
+                response = data;
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    response = "Invalid or Inactive User";
+                } else {
+                    response = "Internal Server Error";
+                }
+            });
+        return response;
+    }
 }
 
 export default new Auth();

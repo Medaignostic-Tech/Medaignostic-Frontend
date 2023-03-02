@@ -18,6 +18,12 @@ function UserDashboard() {
     is_verified: false,
     name: ""
   });
+  const [userStatistics, setUserStatsistics] = useState({
+    diagnosed_patients: 0,
+    approved_reports: 0,
+    yet_to_approve: 0,
+    today_approval: 0
+  });
 
   const changeStyle = () => {
     if (
@@ -43,6 +49,12 @@ function UserDashboard() {
     }
   };
 
+  const userStats = async () => {
+    const stats = await auth.getUserStats();
+    console.log(stats);
+    setUserStatsistics(stats);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       if (auth.isAuthenticated()) {
@@ -58,6 +70,7 @@ function UserDashboard() {
           loginNavigate(0);
         } else {
           setUser(result);
+          await userStats();
         }
       }
     };
@@ -88,7 +101,7 @@ function UserDashboard() {
                               Diagnosed Patients
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              300
+                              {userStatistics["diagnosed_patients"]}
                             </div>
                           </div>
                           <div className="col-auto">
@@ -108,7 +121,7 @@ function UserDashboard() {
                               Approved Reports
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              280
+                              {userStatistics["approved_reports"]}
                             </div>
                           </div>
                           <div className="col-auto">
@@ -128,7 +141,7 @@ function UserDashboard() {
                               Yet to approve
                             </div>
                             <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                              15
+                              {userStatistics["yet_to_approve"]}
                             </div>
                           </div>
                           <div className="col-auto">
@@ -148,7 +161,7 @@ function UserDashboard() {
                               Today Approval
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              3
+                              {userStatistics["today_approval"]}
                             </div>
                           </div>
                           <div className="col-auto">

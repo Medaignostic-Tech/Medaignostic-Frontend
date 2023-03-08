@@ -18,6 +18,7 @@ function Login() {
     const [alert_status, setAlertStatus] = useState('text-danger');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [numTries, setNumTries] = useState(0);
 
     const loginResult = useLocation();
     const dashboardNavigate = useNavigate();
@@ -28,6 +29,13 @@ function Login() {
         const status = await response;
         setAlert(status[0]);
         setAlertStatus(status[1]);
+        if (alert !== "Login Success") {
+            setNumTries(numTries + 1);
+            if (numTries > Math.floor(Math.random() * (6 - 3 + 1)) + 3) {
+                dashboardNavigate("/", {replace: true})
+                dashboardNavigate(0);
+            }
+        }
     };
 
     useEffect(() => {

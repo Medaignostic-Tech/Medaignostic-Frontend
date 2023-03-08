@@ -78,7 +78,7 @@ function VerifyTable() {
                             <tbody>
                                 {data.length !== 0 && data.map((item, index) => (
                                     <tr key={index}>
-                                        <td>{index + 1}</td>
+                                        <td>{((page - 1) * 10) + (index + 1)}</td>
                                         <td>{item.formatted_date}</td>
                                         <td>{item.doctor_name}</td>
                                         <td>{item.validation_name}</td>

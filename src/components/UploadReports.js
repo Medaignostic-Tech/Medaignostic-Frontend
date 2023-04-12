@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
+import bgPic from "../assets/medp3.jpg"
 import UserNavbar from './UserNavbar';
 import MainForm from './MainForm';
 import OrganForm from './OrganForm';
@@ -77,7 +78,7 @@ function UploadReports() {
     };
     
     return (
-        <div className="common-background">
+        <div className="bg-background">
             <UserNavbar />
             <Container fluid className="jumbotron text-white text-center" style={{ marginBottom: '20px' }}>
                 <Row>
@@ -96,9 +97,9 @@ function UploadReports() {
                 return <MainForm setForm={ updateForm } />
             })}
 
-        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => addForm()} size="lg">+</Button>
-        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => deleteForm()} size="lg">-</Button>
-        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="outline-light" onClick={() => submitForm()} size="lg">Submit</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="secondary" onClick={() => addForm()} size="lg">+</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="secondary" onClick={() => deleteForm()} size="lg">-</Button>
+        <Button style={{ width: '95%', marginBottom: '20px', fontSize: '40px' }} variant="secondary" onClick={() => submitForm()} size="lg">Submit</Button>
         </div>
     );
 }

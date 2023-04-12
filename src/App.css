@@ -43,6 +43,15 @@
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 100%);
 }
 
+.bg-background {
+    background: url("./assets/medp3.jpg");
+    height: 100%;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .blink-text {
     animation: blink 1s linear infinite;
 }
